@@ -51,5 +51,13 @@ void pall(stack_t **stack, unsigned int line_number, const char *arg);
 void parse_line(unsigned int line_number);
 void exe_inst(stack_t **stack, unsigned int line_number);
 void free_stack(stack_t *stack);
+void op_pint(stack_t **stack, unsigned int ln,
+		__attribute__((unused))const char *arg);
+void op_pop(stack_t **stack, unsigned int ln,
+		__attribute__((unused))const char *arg);
+void op_swap(stack_t **stack, unsigned int ln,
+		__attribute__((unused))const char *arg);
+void op_nop(stack_t **stack, unsigned int ln,
+		__attribute__((unused))const char *arg);
 
 #endif

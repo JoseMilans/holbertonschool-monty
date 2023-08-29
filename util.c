@@ -45,6 +45,10 @@ void exe_inst(stack_t **stack, unsigned int line_number)
 	instruction_t opcodes[] = {
 		{"push", push},
 		{"pall", pall},
+		{"pint", op_pint},
+		{"pop", op_pop},
+		{"swap", op_swap},
+		{"nop", op_nop},
 		{NULL, NULL}
 	};
 	/* Iterate through the opcodes array and execute the matching instruction */

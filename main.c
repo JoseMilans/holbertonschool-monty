@@ -7,6 +7,7 @@ global_t global_variable;
  * @argv: the command line arguments
  * Return: EXIT_SUCCESS on success, EXIT_FAILURE on error
  */
+
 int main(int argc, char *argv[])
 {
 	unsigned int line_number = 0;
