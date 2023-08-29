@@ -6,7 +6,6 @@
  */
 void parse_line(unsigned int line_number)
 {
-	char *token;
 	size_t start, end;
 
 	/* remove leading spaces */
@@ -19,6 +18,7 @@ void parse_line(unsigned int line_number)
 	start += strspn(global_variable.line + start, " \t\n");
 	end = strcspn(global_variable.line + start, " \t\n");
 	global_variable.arg = strndup(global_variable.line + start, end);
+
 	/* check if opcode is push and there's no argument */
 	if (strcmp(global_variable.opcode, "push") == 0 && !global_variable.arg)
 	{
