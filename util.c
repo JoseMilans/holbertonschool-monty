@@ -50,6 +50,7 @@ void exe_inst(stack_t **stack, unsigned int line_number)
 		{"pint", op_pint},
 		{"pop", op_pop},
 		{"swap", op_swap},
+		{"add", op_add},
 		{"nop", op_nop},
 		{NULL, NULL}
 	};

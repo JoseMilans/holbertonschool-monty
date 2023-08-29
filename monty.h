@@ -59,5 +59,7 @@ void op_swap(stack_t **stack, unsigned int ln,
 		__attribute__((unused))const char *arg);
 void op_nop(stack_t **stack, unsigned int ln,
 		__attribute__((unused))const char *arg);
+void op_add(stack_t **stack, unsigned int ln,
+		__attribute__((unused))const char *arg);
 
 #endif
