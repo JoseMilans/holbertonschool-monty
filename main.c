@@ -7,7 +7,6 @@ global_t global_variable;
  * @argv: the command line arguments
  * Return: EXIT_SUCCESS on success, EXIT_FAILURE on error
  */
-
 int main(int argc, char *argv[])
 {
 	unsigned int line_number = 0;
@@ -32,13 +31,14 @@ int main(int argc, char *argv[])
 		line_number++;
 		if (parse_line(line_number) == EXIT_SUCCESS)
 		{
-			exe_inst(&stack, line_number);
+			if (global_variable.opcode && *global_variable.opcode)
+				exe_inst(&stack, line_number);
 		}
+		free(global_variable.opcode);
+		free(global_variable.arg);
 	}
-	/* clean up */
 	free(global_variable.line);
 	fclose(global_variable.file);
 	free_stack(stack);
-
 	return (EXIT_SUCCESS);
 }
