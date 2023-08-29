@@ -44,6 +44,9 @@ int parse_line(unsigned int line_number)
 		global_variable.arg = strndup(global_variable.line + start, end);
 	else
 		global_variable.arg = NULL;
+	/* check if it is a new line */
+	if (strcmp(global_variable.opcode, "") == 0 && global_variable.arg == NULL)
+		return (EXIT_SUCCESS);
 	/* check if opcode is push and if the argument is not a number */
 	if (strcmp(global_variable.opcode, "push") == 0)
 	{
@@ -83,8 +86,6 @@ void exe_inst(stack_t **stack, unsigned int line_number)
 		if (strcmp(global_variable.opcode, opcodes[i].opcode) == 0)
 		{
 			opcodes[i].f(stack, line_number, global_variable.arg);
-			free(global_variable.opcode);
-			free(global_variable.arg);
 			return;
 		}
 		i++;
@@ -92,8 +93,6 @@ void exe_inst(stack_t **stack, unsigned int line_number)
 	/* If the opcode is not known, exit with a status of EXIT_FAILURE */
 	fprintf(stderr, "L%d: unknown instruction %s\n",
 			line_number, global_variable.opcode);
-	free(global_variable.opcode);
-	free(global_variable.arg);
 	free(global_variable.line);
 	fclose(global_variable.file);
 	free_stack(*stack);
