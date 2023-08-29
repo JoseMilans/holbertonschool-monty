@@ -30,8 +30,10 @@ int main(int argc, char *argv[])
 	while (getline(&global_variable.line, &len, global_variable.file) != -1)
 	{
 		line_number++;
-		parse_line(line_number);
-		exe_inst(&stack, line_number);
+		if (parse_line(line_number) == EXIT_SUCCESS)
+		{
+			exe_inst(&stack, line_number);
+		}
 	}
 	/* clean up */
 	free(global_variable.line);
