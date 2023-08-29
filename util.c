@@ -6,32 +6,26 @@
  */
 void parse_line(unsigned int line_number)
 {
-	char *token;
+	size_t start, end;
 
-	/* Tokenise the line and store the opcode and its argument */
-	token = strtok(global_variable.line, " \n\t");
-	global_variable.opcode = token ? strdup(token) : NULL;
+	/* remove leading spaces */
+	start = strspn(global_variable.line, " \t\n");
+    /* find opcode */
+	end = strcspn(global_variable.line + start, " \t\n");
+	global_variable.opcode = strndup(global_variable.line + start, end);
+    /* find argument */
+	start += end;
+	start += strspn(global_variable.line + start, " \t\n");
+	end = strcspn(global_variable.line + start, " \t\n");
+	global_variable.arg = strndup(global_variable.line + start, end);
 
-	token = strtok(NULL, " \n\t");
-	global_variable.arg = token ? strdup(token) : NULL;
-/* Check if opcode is push and there's no argument or additional parameters */
-	if (strcmp(global_variable.opcode, "push") == 0)
+	/* check if opcode is push and there's no argument */
+	if (strcmp(global_variable.opcode, "push") == 0 && !global_variable.arg)
 	{
-		if (!global_variable.arg)
-		{
-			fprintf(stderr, "L%d: usage: push integer\n", line_number);
-			free(global_variable.line);
-			fclose(global_variable.file);
-			exit(EXIT_FAILURE);
-		}
-		token = strtok(NULL, " \n\t");
-		if (token)
-		{
-			fprintf(stderr, "L%d: too many arguments\n", line_number);
-			free(global_variable.line);
-			fclose(global_variable.file);
-			exit(EXIT_FAILURE);
-		}
+		fprintf(stderr, "L%d: usage: push integer\n", line_number);
+		free(global_variable.line);
+		fclose(global_variable.file);
+		exit(EXIT_FAILURE);
 	}
 }
 
