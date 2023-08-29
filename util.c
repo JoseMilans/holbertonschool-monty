@@ -14,22 +14,24 @@ void parse_line(unsigned int line_number)
 
 	token = strtok(NULL, " \n\t");
 	global_variable.arg = token ? strdup(token) : NULL;
-	/* check if there are too many arguments */
-	token = strtok(NULL, " \n\t");
-	if (token)
+/* Check if opcode is push and there's no argument or additional parameters */
+	if (strcmp(global_variable.opcode, "push") == 0)
 	{
-		fprintf(stderr, "L%d: too many arguments\n", line_number);
-		free(global_variable.line);
-		fclose(global_variable.file);
-		exit(EXIT_FAILURE);
-	}
-	/* Check if the opcode is push and there is no argument */
-	if (strcmp(global_variable.opcode, "push") == 0 && !global_variable.arg)
-	{
-		fprintf(stderr, "L%d: usage: push integer\n", line_number);
-		free(global_variable.line);
-		fclose(global_variable.file);
-		exit(EXIT_FAILURE);
+		if (!global_variable.arg)
+		{
+			fprintf(stderr, "L%d: usage: push integer\n", line_number);
+			free(global_variable.line);
+			fclose(global_variable.file);
+			exit(EXIT_FAILURE);
+		}
+		token = strtok(NULL, " \n\t");
+		if (token)
+		{
+			fprintf(stderr, "L%d: too many arguments\n", line_number);
+			free(global_variable.line);
+			fclose(global_variable.file);
+			exit(EXIT_FAILURE);
+		}
 	}
 }
 
