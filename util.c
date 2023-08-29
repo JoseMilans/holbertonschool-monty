@@ -1,10 +1,33 @@
 #include "monty.h"
+/**
+ * is_number - check if a string is a number
+ * @s: string to check
+ * Return: 1 if s is a number, 0 otherwise
+ */
+int is_number(char *s)
+{
+	int i = 0;
 
+	if (!s)
+		return (0);
+
+	if (s[0] == '-')
+		i++;
+
+	for (; s[i]; i++)
+	{
+		if (!isdigit(s[i]))
+			return (0);
+	}
+	return (1);
+}
 /**
  * parse_line - parse a line of monty byte code
  * @line_number: the line to be parsed
+ * Return: EXIT_SUCCESS on success, terminates the program with EXIT_FAILURE
+ * if the opcode is push and the argument is not an integer.
  */
-void parse_line(unsigned int line_number)
+int parse_line(unsigned int line_number)
 {
 	size_t start, end;
 
@@ -17,16 +40,22 @@ void parse_line(unsigned int line_number)
 	start += end;
 	start += strspn(global_variable.line + start, " \t\n");
 	end = strcspn(global_variable.line + start, " \t\n");
-	global_variable.arg = strndup(global_variable.line + start, end);
-
-	/* check if opcode is push and there's no argument */
-	if (strcmp(global_variable.opcode, "push") == 0 && !global_variable.arg)
+	if (global_variable.line[start])
+		global_variable.arg = strndup(global_variable.line + start, end);
+	else
+		global_variable.arg = NULL;
+	/* check if opcode is push and if the argument is not a number */
+	if (strcmp(global_variable.opcode, "push") == 0)
 	{
-		fprintf(stderr, "L%d: usage: push integer\n", line_number);
-		free(global_variable.line);
-		fclose(global_variable.file);
-		exit(EXIT_FAILURE);
+		if (!global_variable.arg || !is_number(global_variable.arg))
+		{
+			fprintf(stderr, "L%d: usage: push integer\n", line_number);
+			free(global_variable.line);
+			fclose(global_variable.file);
+			exit(EXIT_FAILURE);
+		}
 	}
+	return (EXIT_SUCCESS);
 }
 
 /**
