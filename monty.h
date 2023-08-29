@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
@@ -48,7 +49,8 @@ extern global_t global_variable;
 
 void push(stack_t **stack, unsigned int line_number, const char *arg);
 void pall(stack_t **stack, unsigned int line_number, const char *arg);
-void parse_line(unsigned int line_number);
+int is_number(char *s);
+int parse_line(unsigned int line_number);
 void exe_inst(stack_t **stack, unsigned int line_number);
 void free_stack(stack_t *stack);
 void op_pint(stack_t **stack, unsigned int ln,
