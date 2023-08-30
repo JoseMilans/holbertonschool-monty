@@ -29,11 +29,10 @@ int main(int argc, char *argv[])
 	while (getline(&global_variable.line, &len, global_variable.file) != -1)
 	{
 		line_number++;
-		if (parse_line(line_number) == EXIT_SUCCESS)
-		{
-			if (global_variable.opcode && *global_variable.opcode)
-				exe_inst(&stack, line_number);
-		}
+		if (parse_line() == EXIT_FAILURE)
+			continue;
+		if (global_variable.opcode && *global_variable.opcode)
+			exe_inst(&stack, line_number);
 		free(global_variable.opcode);
 		free(global_variable.arg);
 	}
