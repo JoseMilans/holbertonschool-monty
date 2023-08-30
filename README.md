@@ -56,11 +56,13 @@ Contains utility functions for parsing and executing instructions.
 
 ```bash
 $ gcc -Wall -Werror -Wextra -pedantic *.c -o monty
+```
 
 - The program works like this in interactive mode:
 
 ```bash
 $ ./monty "file".m
+```
 
 ## Authors
 
