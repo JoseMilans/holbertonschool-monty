@@ -4,7 +4,7 @@
  * @s: string to check
  * Return: 1 if s is a number, 0 otherwise
  */
-int is_number(char *s)
+int is_number(const char *s)
 {
 	int i = 0;
 
@@ -19,6 +19,7 @@ int is_number(char *s)
 		if (!isdigit(s[i]))
 			return (0);
 	}
+
 	return (1);
 }
 /**
@@ -27,7 +28,7 @@ int is_number(char *s)
  * Return: EXIT_SUCCESS on success, terminates the program with EXIT_FAILURE
  * if the opcode is push and the argument is not an integer.
  */
-int parse_line(unsigned int line_number)
+int parse_line(void)
 {
 	size_t start, end;
 
@@ -47,17 +48,7 @@ int parse_line(unsigned int line_number)
 	/* check if it is a new line */
 	if (strcmp(global_variable.opcode, "") == 0 && global_variable.arg == NULL)
 		return (EXIT_SUCCESS);
-	/* check if opcode is push and if the argument is not a number */
-	if (strcmp(global_variable.opcode, "push") == 0)
-	{
-		if (!global_variable.arg || !is_number(global_variable.arg))
-		{
-			fprintf(stderr, "L%d: usage: push integer\n", line_number);
-			free(global_variable.line);
-			fclose(global_variable.file);
-			exit(EXIT_FAILURE);
-		}
-	}
+
 	return (EXIT_SUCCESS);
 }
 
