@@ -11,7 +11,7 @@ void push(stack_t **stack, unsigned int line_number, const char *arg)
 	int n;
 	stack_t *new;
 
-	if (!arg) /* check if argument exists */
+	if (!arg || !is_number(arg)) /* check if arg exists and is a num */
 	{
 		fprintf(stderr, "L%d: usage: push integer\n", line_number);
 		free(global_variable.line);
@@ -19,15 +19,8 @@ void push(stack_t **stack, unsigned int line_number, const char *arg)
 		free_stack(*stack);
 		exit(EXIT_FAILURE);
 	}
+
 	n = atoi(arg); /* convert the argument to an integer */
-	if (n == 0 && strcmp(arg, "0") != 0) /* check if arg is an int */
-	{
-		fprintf(stderr, "L%d: usage: push integer\n", line_number);
-		free(global_variable.line);
-		fclose(global_variable.file);
-		free_stack(*stack);
-		exit(EXIT_FAILURE);
-	}
 	/* Allocate memory for the new node */
 	new = malloc(sizeof(stack_t));
 	if (!new)
