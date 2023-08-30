@@ -23,8 +23,7 @@ int is_number(const char *s)
 	return (1);
 }
 /**
- * parse_line - parse a line of monty byte code
- * @line_number: the line to be parsed
+ * parse_line - parse a line of monty byte code.
  * Return: EXIT_SUCCESS on success, terminates the program with EXIT_FAILURE
  * if the opcode is push and the argument is not an integer.
  */
