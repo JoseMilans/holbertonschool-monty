@@ -49,8 +49,8 @@ extern global_t global_variable;
 
 void push(stack_t **stack, unsigned int line_number, const char *arg);
 void pall(stack_t **stack, unsigned int line_number, const char *arg);
-int is_number(char *s);
-int parse_line(unsigned int line_number);
+int is_number(const char *s);
+int parse_line(void);
 void exe_inst(stack_t **stack, unsigned int line_number);
 void free_stack(stack_t *stack);
 void op_pint(stack_t **stack, unsigned int ln,
